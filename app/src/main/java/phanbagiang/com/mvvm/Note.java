@@ -13,7 +13,9 @@ public class Note {
 
     private String description;
 
+
     private int color;
+    private int text_color;
 
     @ColumnInfo(name = "priority_column")
     private int priority;
@@ -22,7 +24,8 @@ public class Note {
         this.title = title;
         this.description = description;
         this.priority = priority;
-        this.color=android.R.color.white;
+//        this.color=0xffffffff;
+//        this.text_color=0x00000000;
     }
 
     public Note() {
@@ -46,6 +49,14 @@ public class Note {
 
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public int getText_color() {
+        return text_color;
+    }
+
+    public void setText_color(int text_color) {
+        this.text_color = text_color;
     }
 
     public void setId(int id) {

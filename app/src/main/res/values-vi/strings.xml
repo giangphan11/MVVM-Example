@@ -10,8 +10,10 @@
     <string name="delete_all_note">Xoá tất cả ghi chú</string>
     <string name="note_updated">Đã chỉnh sửa ghi chú !</string>
     <string name="note_added">Đã thêm ghi chú mới</string>
-    <string name="add_color">Thay đổi màu</string>
+    <string name="add_bg_color">Thay đổi màu nền</string>
+    <string name="add_text_color">Thay đổi màu chữ</string>
     <string name="choose_color">Chọn màu</string>
     <string name="cancel">Huỷ bỏ</string>
     <string name="choose">Chọn</string>
+    <string name="examp_text">Văn bản sẽ trông như thế này</string>
 </resources>

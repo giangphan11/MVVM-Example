@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Note> notes) {
                 // update recyclerview
-                noteAdapter.addNote(notes);
+                noteAdapter.submitList(notes);
             }
         });
         addEvents();
@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(AddEditNoteActivity.EXTRA_PRO,note.getPriority());
                 intent.putExtra(AddEditNoteActivity.EXTRA_DES,note.getDescription());
                 intent.putExtra(AddEditNoteActivity.EXTRA_COLOR,note.getColor());
+                intent.putExtra(AddEditNoteActivity.EXTRA_TEXT_COLOR,note.getText_color());
                 startActivityForResult(intent,EDIT_REQUEST_CODE);
             }
         });
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
     private void addControls(){
         recyclerView=findViewById(R.id.recycler_view);
         btn_add_note=findViewById(R.id.btn_add_note);
-        noteAdapter=new NoteAdapter(getApplicationContext());
+        noteAdapter=new NoteAdapter();
         recyclerView.setAdapter(noteAdapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),RecyclerView.VERTICAL,false));
@@ -133,9 +134,16 @@ public class MainActivity extends AppCompatActivity {
             String title=data.getStringExtra(AddEditNoteActivity.EXTRA_TITLE);
             String des=data.getStringExtra(AddEditNoteActivity.EXTRA_DES);
             int pro=data.getIntExtra(AddEditNoteActivity.EXTRA_PRO,1);
+            int color=data.getIntExtra(AddEditNoteActivity.EXTRA_COLOR,-1);
+            int text_color=data.getIntExtra(AddEditNoteActivity.EXTRA_TEXT_COLOR,-16777216);
             Note note=new Note(title,des,pro);
-            int color=data.getIntExtra(AddEditNoteActivity.EXTRA_COLOR,0xffffffff);
             note.setColor(color);
+            if(text_color==0){
+                note.setText_color(-16777216);
+            }
+            else{
+                note.setText_color(text_color);
+            }
             noteViewModel.insertNote(note);
            Toast.makeText(this, R.string.note_added, Toast.LENGTH_SHORT).show();
         }
@@ -152,8 +160,11 @@ public class MainActivity extends AppCompatActivity {
                 String des=data.getStringExtra(AddEditNoteActivity.EXTRA_DES);
                 int pro=data.getIntExtra(AddEditNoteActivity.EXTRA_PRO,1);
                 int color=data.getIntExtra(AddEditNoteActivity.EXTRA_COLOR,0xffffffff);
+                int text_color=data.getIntExtra(AddEditNoteActivity.EXTRA_TEXT_COLOR,0x00000000);
+                Log.d(TAG, "onActivityResult2: "+text_color);
                 Note note=new Note(title,des,pro);
                 note.setColor(color);
+                note.setText_color(text_color);
                 note.setId(id);
                 noteViewModel.updateNote(note);
                 Toast.makeText(this, R.string.note_updated, Toast.LENGTH_SHORT).show();

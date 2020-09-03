@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -16,31 +18,47 @@ import java.util.List;
 import phanbagiang.com.mvvm.Note;
 import phanbagiang.com.mvvm.R;
 
-public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
-    private List<Note> mData;
-    private Context mContext;
-
+public class NoteAdapter extends ListAdapter<Note,NoteAdapter.ViewHolder> {
     onItemClickListener listener;
 
-    public NoteAdapter(Context mContext) {
-        this.mContext = mContext;
-        mData=new ArrayList<>();
+    public NoteAdapter() {
+        super(DIFF_CALLBACK);
     }
 
+    public static final DiffUtil.ItemCallback<Note> DIFF_CALLBACK=new DiffUtil.ItemCallback<Note>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Note oldItem, @NonNull Note newItem) {
+            return oldItem.getId()==newItem.getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Note oldItem, @NonNull Note newItem) {
+            return oldItem.getTitle().equals(newItem.getTitle())&&
+                    oldItem.getDescription().equals(newItem.getDescription())&&
+                    oldItem.getPriority()==newItem.getPriority()&&
+                    oldItem.getColor()==newItem.getColor()&&
+                    oldItem.getText_color()==newItem.getText_color();
+        }
+    };
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(mContext).inflate(R.layout.note_item,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.note_item,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Note note=mData.get(position);
+        Note note=getItem(position);
         holder.txtTitle.setText(note.getTitle());
         holder.txtDescription.setText(note.getDescription());
         holder.txtPriority.setText(String.valueOf(note.getPriority()));
         holder.cardView.setCardBackgroundColor(note.getColor());
+
+        // change text color
+        holder.txtTitle.setTextColor(note.getText_color());
+        holder.txtDescription.setTextColor(note.getText_color());
+        holder.txtPriority.setTextColor(note.getText_color());
     }
 
     public interface onItemClickListener{
@@ -52,16 +70,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         this.listener=onItemClickListener;
     }
 
-    public void addNote(List<Note> data){
-        mData=data;
-        notifyDataSetChanged();
-    }
     public Note getNoteAt(int position){
-        return mData.get(position);
-    }
-    @Override
-    public int getItemCount() {
-        return mData.size();
+        return getItem(position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -73,13 +83,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             txtDescription=itemView.findViewById(R.id.text_view_description);
             txtTitle=itemView.findViewById(R.id.text_view_title);
             txtPriority=itemView.findViewById(R.id.text_view_priority);
+
             cardView=itemView.findViewById(R.id.item_root);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(listener!=null && getAdapterPosition()!=RecyclerView.NO_POSITION)
-                        listener.onItemClick(mData.get(getAdapterPosition()));
+                        listener.onItemClick(getItem(getAdapterPosition()));
                 }
             });
         }

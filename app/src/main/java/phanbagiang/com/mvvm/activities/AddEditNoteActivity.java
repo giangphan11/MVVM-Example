@@ -2,6 +2,7 @@ package phanbagiang.com.mvvm.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.flask.colorpicker.ColorPickerView;
@@ -32,8 +34,10 @@ public class AddEditNoteActivity extends AppCompatActivity {
     private EditText edtTitle, edtDes;
     private NumberPicker numberPicker;
     private int currentBackgroundColor = 0xffffffff;
-    private View view;
-    Button button;
+    private int currentTextColor = 0x00000000;
+    private CardView view;
+    Button button, btnChangeTextColor;
+    TextView text_example;
 
     private static final String TAG = "AddEditNoteActivity";
 
@@ -41,6 +45,7 @@ public class AddEditNoteActivity extends AppCompatActivity {
     public static final String EXTRA_DES="phanbagiang.com.des";
     public static final String EXTRA_PRO="phanbagiang.com.pro";
     public static final String EXTRA_COLOR="phanbagiang.com.color";
+    public static final String EXTRA_TEXT_COLOR="phanbagiang.com.color.text";
     public static final String EXTRA_ID="phanbagiang.com.id";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +60,10 @@ public class AddEditNoteActivity extends AppCompatActivity {
 
     }
     private void picolor(){
-        button=findViewById(R.id.btn_change_color);
+        text_example=findViewById(R.id.text_example);
+        view=findViewById(R.id.view_color);
+        button=findViewById(R.id.btn_change_bg_color);
+        btnChangeTextColor=findViewById(R.id.btn_change_text_color);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +80,7 @@ public class AddEditNoteActivity extends AppCompatActivity {
                             public void onColorChanged(int selectedColor) {
                                 // Handle on color change
                                 Log.d("ColorPicker", "onColorChanged: 0x" + Integer.toHexString(selectedColor));
+                                Log.d("ColorPicker", "onColorChanged1: " +selectedColor);
                             }
                         })
                         .setOnColorSelectedListener(new OnColorSelectedListener() {
@@ -85,7 +94,7 @@ public class AddEditNoteActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
                                 //changeBackgroundColor(selectedColor);
                                 currentBackgroundColor=selectedColor;
-                                view.setBackgroundColor(currentBackgroundColor);
+                                view.setCardBackgroundColor(currentBackgroundColor);
 //                                if (allColors != null) {
 //                                    StringBuilder sb = null;
 //
@@ -113,9 +122,52 @@ public class AddEditNoteActivity extends AppCompatActivity {
                         .show();
             }
         });
+        btnChangeTextColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Context context = AddEditNoteActivity.this;
+
+                ColorPickerDialogBuilder
+                        .with(context)
+                        .setTitle(R.string.choose_color)
+                        .initialColor(currentBackgroundColor)
+                        .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
+                        .density(12)
+                        .setOnColorChangedListener(new OnColorChangedListener() {
+                            @Override
+                            public void onColorChanged(int selectedColor) {
+                                // Handle on color change
+                                Log.d("ColorPicker", "onColorChanged: 0x" + Integer.toHexString(selectedColor));
+                            }
+                        })
+                        .setOnColorSelectedListener(new OnColorSelectedListener() {
+                            @Override
+                            public void onColorSelected(int selectedColor) {
+                                //toast("onColorSelected: 0x" + Integer.toHexString(selectedColor));
+                            }
+                        })
+                        .setPositiveButton(R.string.choose, new ColorPickerClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
+                                //changeBackgroundColor(selectedColor);
+                                currentTextColor=selectedColor;
+                                text_example.setTextColor(currentTextColor);
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .showColorEdit(true)
+                        .setColorEditTextColor(ContextCompat.getColor(AddEditNoteActivity.this, android.R.color.holo_blue_bright))
+                        .build()
+                        .show();
+            }
+        });
     }
     private void addControls(){
-        view=findViewById(R.id.view_color);
+
         edtDes=findViewById(R.id.edtDes);
         edtTitle=findViewById(R.id.edtTitle);
         numberPicker=findViewById(R.id.number_picker);
@@ -129,8 +181,13 @@ public class AddEditNoteActivity extends AppCompatActivity {
             edtDes.setText(intent.getStringExtra(EXTRA_DES));
             edtTitle.setText(intent.getStringExtra(EXTRA_TITLE));
             numberPicker.setValue(intent.getIntExtra(EXTRA_PRO,1));
-            view.setBackgroundColor(intent.getIntExtra(EXTRA_COLOR,0xffffffff));
-        }
+            currentBackgroundColor=intent.getIntExtra(EXTRA_COLOR,0xffffffff);
+            currentTextColor=intent.getIntExtra(EXTRA_TEXT_COLOR,0x00000000);
+            view.setCardBackgroundColor(currentBackgroundColor);
+            text_example.setTextColor(currentTextColor);
+
+
+    }
         else{
             setTitle(R.string.add_note);
         }
@@ -165,6 +222,7 @@ public class AddEditNoteActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_DES,des);
         intent.putExtra(EXTRA_PRO,pro);
         intent.putExtra(EXTRA_COLOR,currentBackgroundColor);
+        intent.putExtra(EXTRA_TEXT_COLOR,currentTextColor);
         int id= getIntent().getIntExtra(EXTRA_ID,-1);
 
         if(id!=-1){

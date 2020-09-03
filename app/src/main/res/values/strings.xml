@@ -9,8 +9,10 @@
     <string name="delete_all_note">Delete all notes</string>
     <string name="note_updated">Note updated !</string>
     <string name="note_added">Note added !</string>
-    <string name="add_color">Change color</string>
+    <string name="add_bg_color">Change background color</string>
+    <string name="add_text_color">Change text color</string>
     <string name="choose_color">Choose color</string>
     <string name="cancel">Cancel</string>
     <string name="choose">Choose</string>
+    <string name="examp_text">The text should look like this</string>
 </resources>
