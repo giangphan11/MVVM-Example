@@ -6,11 +6,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AddNoteActivity">
+    tools:context=".activities.AddEditNoteActivity">
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/tool_bar"
         android:background="@color/colorPrimary"
-        android:theme="@style/Theme.AppCompat.Light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"/>
@@ -21,7 +21,7 @@
         android:layout_height="match_parent">
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:hint="Title"
+            android:hint="@string/title"
             android:layout_marginBottom="10dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_height="wrap_content">
@@ -33,7 +33,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:hint="Description"
+            android:hint="@string/des"
             android:layout_marginBottom="10dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_height="wrap_content">
@@ -44,7 +44,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:text="Priority"
+            android:text="@string/priority"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_marginBottom="10dp"
@@ -53,5 +53,17 @@
             android:id="@+id/number_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+        <View
+            android:id="@+id/view_color"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_change_color"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            app:backgroundTint="@null"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_button"
+            android:text="@string/add_color" />
     </LinearLayout>
 </LinearLayout>

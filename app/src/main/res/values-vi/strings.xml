@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Note</string>
+    <string name="update_note">Sửa ghi chú</string>
+    <string name="add_note">Thêm mới ghi chú</string>
+    <string name="title">Tiêu đề</string>
+    <string name="des">Mô tả</string>
+    <string name="priority">Sự ưu tiên</string>
+    <string name="alert">Vui lòng điền đầy đủ thông tin!!!</string>
+    <string name="delete_all_note">Xoá tất cả ghi chú</string>
+    <string name="note_updated">Đã chỉnh sửa ghi chú !</string>
+    <string name="note_added">Đã thêm ghi chú mới</string>
+    <string name="add_color">Thay đổi màu</string>
+    <string name="choose_color">Chọn màu</string>
+    <string name="cancel">Huỷ bỏ</string>
+    <string name="choose">Chọn</string>
+</resources>

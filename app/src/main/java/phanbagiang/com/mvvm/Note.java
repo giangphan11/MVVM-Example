@@ -13,6 +13,8 @@ public class Note {
 
     private String description;
 
+    private int color;
+
     @ColumnInfo(name = "priority_column")
     private int priority;
 
@@ -20,6 +22,7 @@ public class Note {
         this.title = title;
         this.description = description;
         this.priority = priority;
+        this.color=android.R.color.white;
     }
 
     public Note() {
@@ -31,6 +34,14 @@ public class Note {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 
     public void setPriority(int priority) {

@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">MVVM</string>
+    <string name="app_name">Note</string>
+    <string name="update_note">Update note</string>
+    <string name="add_note">Add note</string>
+    <string name="title">Title</string>
+    <string name="des">Description</string>
+    <string name="priority">Priority</string>
+    <string name="alert">please input all fields!!!</string>
+    <string name="delete_all_note">Delete all notes</string>
+    <string name="note_updated">Note updated !</string>
+    <string name="note_added">Note added !</string>
+    <string name="add_color">Change color</string>
+    <string name="choose_color">Choose color</string>
+    <string name="cancel">Cancel</string>
+    <string name="choose">Choose</string>
 </resources>
