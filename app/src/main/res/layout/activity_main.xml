@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:background="@color/colorPrimary"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,6 +9,7 @@
     tools:context=".activities.MainActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
+        app:elevation="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.appcompat.widget.Toolbar
@@ -26,12 +28,17 @@
         tools:listitem="@layout/note_item"
         android:layout_height="match_parent"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btn_add_note"
-        android:src="@drawable/ic_create"
-        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
-        android:layout_height="wrap_content"/>
+        android:text="@string/add_note"
+        android:textColor="#fff"
+        android:inputType="text"
+        android:fontFamily="@font/swiss"
+        app:iconTint="#fff"
+        app:icon="@drawable/ic_cr2"
+        app:backgroundTint="#121212" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

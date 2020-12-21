@@ -17,8 +17,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Toast;
 
+import com.google.android.material.animation.MotionSpec;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -39,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     NoteAdapter noteAdapter;
-    private FloatingActionButton btn_add_note;
+    //private FloatingActionButton btn_add_note;
+    ExtendedFloatingActionButton btn_add_note;
+    private static int firstVisibleInListview;
 
     public static final int ADD_REQUEST_CODE=113;
     public static final int EDIT_REQUEST_CODE=11;
@@ -63,6 +68,35 @@ public class MainActivity extends AppCompatActivity {
         addEvents();
     }
     private void addEvents(){
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    // Scrolling up
+                    //Log.d(TAG, "onScrolled: UP");
+                    btn_add_note.shrink();
+                } else {
+                    // Scrolling down
+                    //Log.d(TAG, "onScrolled: DOWN");
+                    btn_add_note.extend();
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+                    // Do something
+                } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    // Do something
+                } else {
+                    // Do something
+                }
+            }
+        });
         btn_add_note.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
     private void addControls(){
         recyclerView=findViewById(R.id.recycler_view);
         btn_add_note=findViewById(R.id.btn_add_note);
+
         noteAdapter=new NoteAdapter();
         recyclerView.setAdapter(noteAdapter);
         recyclerView.setHasFixedSize(true);
